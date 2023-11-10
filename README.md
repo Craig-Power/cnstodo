@@ -6,7 +6,7 @@ This project was created as a demonstration application for a position with the 
 Required Software:
 
 - Docker
-- Python 3.10, pip (to run outside of container), venv recommended
+- If running standalone: Python 3.10, pip, venv recommended
 
 Instructions:
 
