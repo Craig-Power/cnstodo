@@ -43,7 +43,7 @@ Task Details
     $(document).ready(function(){
         $('#btnBack').click(function(e){
            e.preventDefault();
-           window.history.back();
+           window.location.replace("{% url 'todo:tasklist' %}");
         });
         $('#btnDelete').click(function(e){
            e.preventDefault();

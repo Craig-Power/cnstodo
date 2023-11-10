@@ -27,12 +27,18 @@ Task Details
         </form>
 
 <script>
+
     $(document).ready(function(){
         $('#btnBack').click(function(e){
            e.preventDefault();
-           window.history.back();
+           {% if task.id is None %}
+            window.location.replace("{% url 'todo:tasklist' %}");
+           {% else %}
+            window.location.replace("{% url 'todo:taskdetails' id=task.id %}");
+           {% endif %}
         });
     });
+
 </script>
 
 {% endblock %}
