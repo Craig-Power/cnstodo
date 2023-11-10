@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.forms import modelformset_factory
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -106,6 +105,10 @@ def task_delete_view(request, id=None):
     :param id:
     :return:
     """
+    # Fix CSRF Vulnerability
+    if request.method != 'POST':
+        return redirect('todo:tasklist')
+
     if id is None:
         return redirect('todo:tasklist')
 

@@ -144,4 +144,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Release: 0=Alpha, 1=Beta, 2=Release
-PHASE = int(os.getenv("PHASE", "0"))
+PHASE = int(os.getenv("PHASE", "1"))

@@ -10,15 +10,20 @@ Task Details
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-1 text-start">
-        <button type="button" id="btnBack" class="btn btn-primary">Back</button>
+<form id="frmDelete" action="{% url 'todo:taskdelete' id=task.id %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+
+        <div class="col-1 text-start">
+            <button type="button" id="btnBack" class="btn btn-primary">Back</button>
+        </div>
+        <div class="col-11 text-end">
+            <button type="button" id="btnEdit"class="btn btn-success">Edit</button>
+            <button type="button" id="btnDelete" class="btn btn-danger" type="submit">Delete</button>
+
+        </div>
     </div>
-    <div class="col-11 text-end">
-        <button type="button" id="btnEdit"class="btn btn-success">Edit</button>
-        <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
-    </div>
-</div>
+</form>
 <hr>
 <div class="row">
     <div class="col-4">Task:</div><div class="col-8"> {{task.task_name}}</div>
@@ -48,7 +53,7 @@ Task Details
         $('#btnDelete').click(function(e){
            e.preventDefault();
            if(confirm('Warning: You are about to delete this task. This cannot be undone. Do you wish to continue?')) {
-            window.location.replace("{% url 'todo:taskdelete' id=task.id %}");
+                $('#frmDelete').submit();
            }
         });
         $('#btnEdit').click(function(e){
