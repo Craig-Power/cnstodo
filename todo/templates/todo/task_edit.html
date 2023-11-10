@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+{% block title %}Task Details{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block heading %}
+Task Details
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-1 text-start">
+                <button type="button" id="btnBack" class="btn btn-primary">Back</button>
+            </div>
+            <div class="col-11 text-end">
+                <button type="submit" id="btnSave"class="btn btn-success">Save</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            {{form}}
+        </div>
+        </form>
+
+<script>
+    $(document).ready(function(){
+        $('#btnBack').click(function(e){
+           e.preventDefault();
+           window.history.back();
+        });
+    });
+</script>
+
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

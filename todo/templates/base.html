@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Title{% endblock %}</title>
+        {% load bootstrap5 %}
+        {% load static %}
+        {% load compress %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        {% compress css %}
+        <link type="text/x-scss" href="{% static 'style.scss' %}"     rel="stylesheet" media="screen">
+        {% endcompress %}
+        <script type="text/javascript" src="{% static 'jquery-3.7.1.min.js' %}">
+        </script>
+</head>
+<body>
+    <div class="container">
+        {% if PHASE == 0 %}
+        <br/>
+        <div id="alpha" class="alert-danger" role="alert">
+            <p class="font-weight-bold">This is a new service that we're still developing. Try the service and send us your comments and suggestions. Your feedback will help make the service easier to use for everyone.</p>
+        </div>
+        {% elif PHASE == 1 %}
+        <div id="beta" class="alert-warning" role="alert">
+
+            <p class="font-weight-bold">This is a new service that we're working on improving. Use the service and send us your comments and suggestions. Your feedback will help make the service easier to use for everyone.</p>
+        </div>
+        {% endif %}
+
+        <div id="menu" class="sticky-top">
+            <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link link-light " href="/">HOME</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link link-light" href="/logout">LOGOUT</a>
+                </li>
+                {% endif %}
+                {% block menu %}
+
+                {% endblock %}
+            </ul>
+        </div>
+
+        {% if messages %}
+        <div id="message">
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="alert alert-danger" role="alert">
+                        {{message}}
+                    </div>
+                {% endif %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    <div class="alert alert-success" role="alert">
+                        {{message}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div id="content">
+            <div class="row justify-content-center">
+                <div class="col"></div>
+                <div class="col-10 justify-content-center">
+                    <h1>{% block heading %}Title{% endblock %}</h1>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col"></div>
+                <div class="col-10">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                <div class="col"></div>
+            </div>
+
+        </div>
+
+        <div id="footer">
+            <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link link-light" href="/">HOME</a>
+                </li>
+                {% block footer %}
+                {% endblock %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

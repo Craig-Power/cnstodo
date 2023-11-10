@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+{% block title %}Task List{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block heading %}
+Task List
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-5 text-start">
+        <form method="get" action="{% url 'todo:tasklist' %}">
+            <p>Filter: <input type="text" value="{{filter}}" name="filter"/><input type="submit" name="submit" value="submit"/></p>
+        </form>
+    </div>
+    <div class="col-7 text-end">
+        <button type="button" id="btnCreate"class="btn btn-success">Create Task</button>
+
+    </div>
+</div>
+
+Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    <div class="row">
+        <div class="col-5">
+            Task
+        </div>
+        <div class="col-3">
+            Due Date
+        </div>
+        <div class="col-2">
+            Priority
+        </div>
+        <div class="col-2">
+            Status
+        </div>
+    </div>
+<hr>
+{% for task in page_obj %}
+    <div class="row bg-light border border-dark">
+        <div class="col-5">
+            <a href="{% url 'todo:taskdetails' id=task.id %}">{{ task.task_name | truncatechars:30}}</a>
+        </div>
+        <div class="col-3">
+            {{ task.task_due_date|date:"M d, Y"}}
+        </div>
+        {% if task.task_priority_id > 3 %}
+        <div class="col-2 bg-danger">
+        {% else %}
+        <div class="col-2 bg-info">
+        {% endif %}
+            {{ task.task_priority }}
+        </div>
+        <div class="col-2">
+            {{ task.task_state }}
+        </div>
+    </div>
+
+{% endfor %}
+    <hr>
+    <nav>
+    <div class="row">
+        <div class="col-12">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?page=1" >First</a></li>
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_obj.previous}}">Previous</a></li>
+                {% endif %}
+                {% for page in page_obj.paginator.get_elided_page_range %}
+                    {% if page_obj.number == page %}
+                        <li class="active page-item"><span class="page-link">{{page}}</span></li>
+                    {% else %}
+                        {% if page == page_obj.paginator.ELLIPSIS %}
+                            <li class="page-item"><span class="page-link">{{page}}</span></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                        {% endif %}
+                    {% endif %}
+
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last</a></li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+    <script>
+    $(document).ready(function(){
+        $('#btnCreate').click(function(e){
+           e.preventDefault();
+           window.location.replace("{% url 'todo:taskcreate' %}");
+        });
+    });
+</script>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

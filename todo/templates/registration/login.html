@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block heading %}
+Login
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>Welcome to the Todo Application for the Province of Nova Scotia.
+            This application is only available to registered users. To begin,
+            enter your username and password below. If you have forgotten your
+            credentials, please contact an administrator for assistance.</p>
+            {{ form.as_p }}
+        <button type="submit">Log In</button>
+    </form>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

@@ -1,0 +1,64 @@
+
+{% extends "base.html" %}
+{% block title %}Task Details{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block heading %}
+Task Details
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-1 text-start">
+        <button type="button" id="btnBack" class="btn btn-primary">Back</button>
+    </div>
+    <div class="col-11 text-end">
+        <button type="button" id="btnEdit"class="btn btn-success">Edit</button>
+        <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-4">Task:</div><div class="col-8"> {{task.task_name}}</div>
+</div>
+<div class="row">
+    <div class="col-4">Date Created:</div><div class="col-8"> {{task.task_creation_date}}</div>
+</div>
+<div class="row">
+    <div class="col-4">Date Due:</div><div class="col-8"> {{task.task_due_date}}</div>
+</div>
+<div class="row">
+    <div class="col-4">Priority:</div><div class="col-8"> {{task.task_priority}}</div>
+</div>
+<div class="row">
+    <div class="col-4">Status:</div><div class="col-8"> {{task.task_state}}</div>
+</div>
+<div class="row">
+    <div class="col-4">Description:</div><div class="col-8"> {{task.task_description|linebreaks}}</div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#btnBack').click(function(e){
+           e.preventDefault();
+           window.history.back();
+        });
+        $('#btnDelete').click(function(e){
+           e.preventDefault();
+           if(confirm('Warning: You are about to delete this task. This cannot be undone. Do you wish to continue?')) {
+            window.location.replace("{% url 'todo:taskdelete' id=task.id %}");
+           }
+        });
+        $('#btnEdit').click(function(e){
+           e.preventDefault();
+            window.location.replace("{% url 'todo:taskedit' id=task.id %}");
+        });
+    });
+</script>
+
+{% endblock %}
+{% block footer %}
+
+{% endblock %}
